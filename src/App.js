@@ -1,6 +1,37 @@
 import React, { Component, Fragment } from "react";
 import { createPortal } from "react-dom";
 
+const MAX_PIZZAS = 20;
+
+const eatPizza = (state, props) => {
+  const { pizzas } = state;
+  if (pizzas < MAX_PIZZAS) {
+    return {
+      pizzas: pizzas + 1
+    };
+  } else {
+    return null;
+  }
+};
+
+class Contorlled extends Component {
+  state = {
+    pizzas: 0
+  };
+  render() {
+    const { pizzas } = this.state;
+    return (
+      <button onClick={this._handleClick}>{`I have eaten ${pizzas} ${
+        pizzas === 1 ? "pizza" : "pizzas"
+      }`}</button>
+    );
+  }
+  _handleClick = () => {
+    this.setState(eatPizza);
+  };
+}
+
+/*
 const BoundaryHOC = ProtectedComponent =>
   class Boundary extends Component {
     state = {
@@ -60,6 +91,7 @@ class ReturnTypes extends Component {
 }
 
 const ErrorFallback = () => " Sorry something went wrong";
+*/
 
 class App extends Component {
   /*
@@ -77,14 +109,15 @@ class App extends Component {
     // const { hasError } = this.state;
     return (
       <Fragment>
-        <ReturnTypes />
+        {/* <ReturnTypes /> */}
         {/* <Portals /> */}
-        <PPortals />
+        {/* <PPortals /> */}
         {/* {hasError ? <ErrorFallback /> : <ErrorMaker />} */}
-        <PErrorMaker />
+        {/* <PErrorMaker /> */}
+        <Contorlled />
       </Fragment>
     );
   }
 }
 
-export default BoundaryHOC(App);
+export default App;
